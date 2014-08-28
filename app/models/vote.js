@@ -1,14 +1,13 @@
 // ******************************************
-// Schema for Starred items.
+// Schema for recording Votes.
 // __________________________________________
 
 var mongoose = require('mongoose');
 
-var starredItem = mongoose.Schema({
+var voteRecord = mongoose.Schema({
 
     itemId      : String,
     userId      : String,
-    itemType    : String,
     date        : {
         type : Date,
         default: Date.now
@@ -17,4 +16,4 @@ var starredItem = mongoose.Schema({
 });
 
 // Create the model for users and expose it to our app
-module.exports = mongoose.model('StarredItem', starredItem);
+module.exports = mongoose.model('VoteItem', voteRecord);

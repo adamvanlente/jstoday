@@ -26,15 +26,15 @@ var userSchema = mongoose.Schema({
 
 });
 
-// Hash for password.
+// Generate a hash for PW.
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-// Confirm that password is valid
+// Confirm that a hash is valid.
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
-// Export model the the app.
+// Create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
