@@ -1,27 +1,29 @@
 // ******************************************
-// JSPRO APP
+// JSPRO UPDATE SERVER APP
 //
-// Keep up with the latest JS news and tweets
-// from movers and shakers.  Log in to the
-// app to star articles for later viewing.
+// Dumps articles of interest into a database
+// to support the main jspro-site app.  This app
+// can be run as a cron job.
 // __________________________________________
 
 // Add neccessary modules.
 var express      = require('express');
-// var port         = 80;
-var port         = 3000; // dev port
+var port         = 3000;
 var mongoose     = require('mongoose');
 var passport     = require('passport');
-var path         = require('path');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
 var configDB     = require('./config/database.js');
+
+// Connect to database.
+mongoose.connect(configDB.url);
 
 // Set up the express application.
 var app = express();
+
+app.set('view engine', 'jade');
+
+// Pass app to route.
+require('./app/routes/main.js')(app);
 
 // launch ======================================================================
 app.listen(port);
