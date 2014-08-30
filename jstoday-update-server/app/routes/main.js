@@ -12,8 +12,12 @@ module.exports = function(app) {
   // Set up a route for our cron job; it will run with a curl command.
   app.get('/cron', function(req, res) {
 
-      // Run the cron job functions.
 
+      var responseObject = {};
+      responseObject.success = true;
+      responseObject.message = 'Added new tweet and blog entries.';
+
+      res.json(responseObject);
   });
 
 };

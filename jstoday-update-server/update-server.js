@@ -20,8 +20,6 @@ mongoose.connect(configDB.url);
 // Set up the express application.
 var app = express();
 
-app.set('view engine', 'jade');
-
 // Pass app to route.
 require('./app/routes/main.js')(app);
 
