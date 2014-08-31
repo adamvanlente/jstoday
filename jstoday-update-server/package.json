@@ -1,5 +1,7 @@
 {
-  "name": "node-authentication",
+  "name": "jstoday-update-server",
+  "author": "Adam VanLente",
+  "description": "Updates database for companion app jstoday-site",
   "main": "server.js",
   "dependencies": {
     "express": "~4.0.0",

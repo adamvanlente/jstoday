@@ -1,5 +1,7 @@
 {
-  "name": "node-authentication",
+  "name": "jstoday-site",
+  "author": "Adam VanLente",
+  "description": "Main app for the jstoday.io site.",
   "main": "server.js",
   "dependencies": {
     "express": "~4.0.0",
