@@ -74,9 +74,9 @@ function storeArticleContent(article) {
 
                 newFeedItem.save(function(err) {
                     if (err) {
-                      console.log('unable to add article.');
+                        console.log('unable to add article.');
                     } else {
-                      console.log('Added an article'.);
+                        console.log('Added an article.');
                     }
                 });
             }
