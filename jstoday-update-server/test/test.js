@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var FeedItem = require('../app/models/feed_item');
 
 // Connecting to a local test database or creating it on the fly
-mongoose.connect('mongodb://localhost:27017/user_test');
+mongoose.connect('mongodb://localhost:27017/jstoday_db_test');
 
-// Start Mocha
+// Mocha test for a feed item.
 describe('FeedItem', function(){
 
-    // Delete the User model after each run.
+    // Delete feed item model after each test run.
     afterEach(function(done){
         FeedItem.model.remove({}, function() {
             done();
@@ -17,7 +17,7 @@ describe('FeedItem', function(){
     // =====================
     // TEST creating a feed item.
     // _____________________
-    it('creates a new user', function(done) {
+    it('creates a new feed item.', function(done) {
 
         var feedItemObject     = {};
 

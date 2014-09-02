@@ -24,3 +24,4 @@ var app = express();
 
 // launch ======================================================================
 app.listen(port);
+console.log('jstoday app is running on port', port);

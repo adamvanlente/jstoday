@@ -4,9 +4,7 @@
 
 var mongoose = require('mongoose');
 
-// Create the model for users and expose it to our app
-// module.exports = mongoose.model('FeedItem', feedItem);
-
+// Create the model for feed items and expose it to our app
 var FeedItem = function() {
 
     var _schemaModel = mongoose.Schema({
@@ -25,10 +23,8 @@ var FeedItem = function() {
         }
     });
 
-    // Declare a model
     var _model = mongoose.model('FeedItem', _schemaModel);
 
-    // Creating a register method for convenience
     var _createNew = function(feedItemObject, callback) {
         _model.create(feedItemObject, function(err, doc) {
             if(err) {
@@ -39,7 +35,6 @@ var FeedItem = function() {
         });
     };
 
-    // Return new Schema object.
     return {
         createNew: _createNew,
         schema: _schemaModel,
@@ -47,5 +42,4 @@ var FeedItem = function() {
     }
 }();
 
-// module.exports = User;
 module.exports = FeedItem;
