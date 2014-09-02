@@ -10,7 +10,6 @@
 var express      = require('express');
 var port         = 3000;
 var mongoose     = require('mongoose');
-var passport     = require('passport');
 
 var configDB     = require('./config/database.js');
 
@@ -25,3 +24,4 @@ require('./app/routes/main.js')(app);
 
 // launch ======================================================================
 app.listen(port);
+console.log('update server running on port', port);
