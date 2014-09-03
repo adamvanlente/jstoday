@@ -19,8 +19,14 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var configDB     = require('./config/database.js');
 
+// Connect to database.
+mongoose.connect(configDB.url);
+
 // Set up the express application.
 var app = express();
+
+// Set up routes.
+require('./app/routes/feeds.js')(app);
 
 // launch ======================================================================
 app.listen(port);

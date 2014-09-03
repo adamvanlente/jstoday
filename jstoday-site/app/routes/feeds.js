@@ -11,57 +11,127 @@ var VoteItem      = require('../models/vote');
 
 module.exports = function(app) {
 
-  // GET ALL BY DATE
-  app.get('/feed/all/:start', function(req, res) {
+    // ===============
+    // GET ALL BY DATE
+    // _______________
+    app.get('/feed/all/:start', function(req, res) {
 
-      // Get all items (tweets and blog posts)
-      // Paginated version
+        // Start the response at this record.
+        var start = req.params.start || 0;
 
-  });
+        var count;
+        FeedItem.getCount({}, function(itemCount) {
+            count = itemCount;
+        });
 
-  // GET ALL BY DATE
-  app.get('/feed/all/popular/:start', function(req, res) {
+        var exclusions = {__v: 0};
+        var sortParams = {sort: {date: -1}, skip: start, limit: 20};
+        FeedItem.findMany({}, exclusions, sortParams, function(items) {
+            renderResponse(count, items, true, res);
+        });
 
-      // Get all items, order by popularity.
+    });
 
-  });
+    // ===============
+    // GET ALL BY DATE
+    // _______________
+    app.get('/feed/all/popular/:start', function(req, res) {
 
-  // TWITTER FEEDS
-  app.get('/feed/tweets/:start', function(req, res) {
+        // Start the response at this record.
+        var start = req.params.start || 0;
 
-      // Paginated list of tweets.
+        var count;
+        FeedItem.getCount({}, function(itemCount) {
+            count = itemCount;
+        });
 
-  });
+        var exclusions = {__v: 0};
+        var sortParams = {sort: {votes: -1, date: -1}, skip: start, limit: 20};
+        FeedItem.findMany({}, exclusions, sortParams, function(items) {
+            renderResponse(count, items, true, res);
+        });
 
-  // BLOG ENTRIES
-  app.get('/feed/blogs/:start', function(req, res) {
+    });
 
-      // Paginated list of blogs
+    // ===============
+    // GET A USER'S FEED ITEMS.
+    // _______________
+    app.get('/feed/starred/:user/:start', function(req, res) {
 
-  });
+        var user   = req.params.user;
+        var start  = req.params.start;
 
-  app.get('/feed/starredItems/:user/:start', function(req, res) {
+        var params = {userId: user};
+        var exclusions = {__v: 0};
+        var sortParams = {sort: {date: -1}};
+        StarredItem.findMany(params, exclusions, sortParams, function(doc) {
+            res.json(doc);
+        });
 
-      // Get list of starred items by user, paginated
+    });
 
-  });
 
-  app.get('/feed/starred/:user', function(req, res) {
+    // ===============
+    // GET JUST THE ITEM IDS OF A USER'S FEED ITEMS.
+    // _______________
+    app.get('/feed/allstarred/:user', function(req, res) {
 
-      // Get a list of ids of starred items for a user.
+        var listForResponse = [];
 
-  });
+        var user   = req.params.user;
 
-  app.get('/feed/votes/:user', function(req, res) {
+        var params = {userId: user};
+        var exclusions = {__v: 0, itemType: 0, userId: 0, _id: 0, date: 0};
+        var sortParams = {sort: {date: -1}};
+        StarredItem.findMany(params, exclusions, sortParams, function(doc) {
+            for (var i = 0; i < doc.length; i++) {
+                listForResponse.push(doc[i].itemId);
+            }
+            res.json(listForResponse);
+        });
 
-      // Get a list of ids of articles a user has starred.
+    });
 
-  });
 
-  function renderResponse(count, doc, success, res, message) {
+    // ===============
+    // GET JUST THE ITEM IDS OF A USER'S FEED ITEMS.
+    // _______________
+    app.get('/feed/allvoted/:user', function(req, res) {
 
-      // Helper function that renders a response for client side js.
+        var listForResponse = [];
 
-  }
+        var user   = req.params.user;
+
+        var params = {userId: user};
+        var exclusions = {__v: 0, itemType: 0, userId: 0, _id: 0, date: 0};
+        var sortParams = {sort: {date: -1}};
+        VoteItem.findMany(params, exclusions, sortParams, function(doc) {
+            for (var i = 0; i < doc.length; i++) {
+                listForResponse.push(doc[i].itemId);
+            }
+            res.json(listForResponse);
+        });
+
+    });
+
+    // ===============
+    // HELPER FUNCTION FOR RENDERING A RESPONSE.
+    // _______________
+    function renderResponse(count, doc, success, res, message) {
+
+        message          = message || 'no message';
+
+        var response     = {};
+
+        response.count   = count;
+        response.results = doc;
+        response.success = success;
+        response.message = message
+
+        res.json(response);
+
+    }
+
+
 
 };

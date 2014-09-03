@@ -39,10 +39,21 @@ var StarredItem = function() {
         });
     }
 
+    var _findMany = function(params, exclusions, sortParams, callback) {
+        _model.find(params, exclusions, sortParams, function(err, doc) {
+            if (err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    };
+
     return {
         createNew: _createNew,
         schema: _schemaModel,
         findOne: _findOne,
+        findMany: _findMany,
         model: _model
     }
 }();

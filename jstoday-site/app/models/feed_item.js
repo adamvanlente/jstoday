@@ -55,10 +55,34 @@ var FeedItem = function() {
         });
     };
 
+    var _getCount = function(feedObj, callback) {
+        _model.count(feedObj, function(err, doc) {
+            if(err) {
+                console.log(err);
+            } else {
+                callback(doc);
+            }
+        });
+    };
+
+    var _findMany = function(params, exclusions, sortParams, callback) {
+
+        // Get all the feed items.
+        _model.find(params, exclusions, sortParams, function(err, doc) {
+            if (err) {
+                console.log(err);
+            } else {
+                callback(doc);
+            }
+        });
+    };
+
     return {
         createNew: _createNew,
         findByTitle: _findByTitle,
         findById: _findById,
+        getCount: _getCount,
+        findMany: _findMany,
         schema: _schemaModel,
         model: _model
     }

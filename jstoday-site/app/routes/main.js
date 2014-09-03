@@ -7,7 +7,7 @@ module.exports = function(app, passport) {
 	// HOME
 	app.get('/', function(req, res) {
 
-			// Render homepage.
+			res.render('index.jade', { user : req.user });
 
 	});
 
