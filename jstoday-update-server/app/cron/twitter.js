@@ -96,16 +96,15 @@ function requestAndHandleTweets(options) {
 
 function addTwitterItemToDatabase(tweet) {
 
-    FeedItem.findOne({ 'itemId' :  tweet.id_str }, function(err, item) {
-        if (err)
-            return done(err);
+    FeedItem.findById(tweet.id_str, function(item) {
 
         if (item) {
+
             // pass.
         } else {
 
             // Create a new feed item for the database.
-            var newFeedItem         = new FeedItem();
+            var newFeedItem         = {};
             var userName            = tweet.user.screen_name;
             newFeedItem.itemId      = tweet.id_str;
             newFeedItem.content     = tweet.text;
@@ -116,12 +115,8 @@ function addTwitterItemToDatabase(tweet) {
             newFeedItem.type        = 'twitter';
             newFeedItem.votes       = '0';
 
-            newFeedItem.save(function(err) {
-                if (err) {
-                    throw err;
-                } else {
-                    console.log('added new tweet');
-                }
+            FeedItem.createNew(newFeedItem, function(doc) {
+                console.log('added item');
             });
         }
     });

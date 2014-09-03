@@ -23,11 +23,56 @@ describe('FeedItem', function(){
 
         feedItemObject.author  = 'Adam';
         feedItemObject.content = 'some fake content.';
+        feedItemObject.title   = 'Freaky Deaky';
 
         FeedItem.createNew(feedItemObject, function(doc) {
             doc.author.should.eql('Adam');
+            doc.title.should.eql('Freaky Deaky');
             done();
         });
     });
+
+    // =====================
+    // TEST finding a feed item.
+    // _____________________
+    it('find a feed item by title.', function(done) {
+
+        var feedItemObject     = {};
+
+        feedItemObject.author  = 'Adam';
+        feedItemObject.content = 'some fake content.';
+        feedItemObject.title   = 'Freaky Deaky';
+
+        FeedItem.createNew(feedItemObject, function(doc) {});
+
+        FeedItem.findByTitle('Freaky Deaky', function(item) {
+            item.title.should.eql('Freaky Deaky');
+            done();
+        })
+
+    });
+
+    // =====================
+    // TEST creating a feed item.
+    // _____________________
+    it('find a feed item by id.', function(done) {
+
+        var feedItemObject     = {};
+
+        feedItemObject.author  = 'Adam';
+        feedItemObject.content = 'some fake content.';
+        feedItemObject.title   = 'Freaky Deaky';
+        feedItemObject.itemId  = '019019';
+
+        FeedItem.createNew(feedItemObject, function(doc) {});
+
+        FeedItem.findById('019019', function(item) {
+            item.itemId.should.eql('019019');
+            done();
+        })
+
+    });
+
+
 
 });

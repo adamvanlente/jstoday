@@ -52,16 +52,14 @@ function storeArticleContent(article) {
     } else {
 
         // Check if an item with this ID already exists.
-        FeedItem.findOne({ 'title' :  article.title }, function(err, item) {
-
-            if (err)
-                return done(err);
+        FeedItem.findByTitle(article.title, function(item) {
 
             if (item) {
                 console.log('This (blog) item already exists.')
             } else {
+
                 // Create a new feed item for the database.
-                var newFeedItem         = new FeedItem();
+                var newFeedItem         = {};
 
                 newFeedItem.itemId      = article.title;
                 newFeedItem.title       = article.title;
@@ -72,13 +70,17 @@ function storeArticleContent(article) {
                 newFeedItem.source_url  = article.link;
                 newFeedItem.type        = 'blog';
 
-                newFeedItem.save(function(err) {
-                    if (err) {
-                        console.log('unable to add article.');
-                    } else {
-                        console.log('Added an article.');
-                    }
+
+                FeedItem.createNew(newFeedItem, function(doc) {
+                    console.log('added item');
                 });
+                // newFeedItem.save(function(err) {
+                //     if (err) {
+                //         console.log('unable to add article.');
+                //     } else {
+                //         console.log('Added an article.');
+                //     }
+                // });
             }
         });
     }
