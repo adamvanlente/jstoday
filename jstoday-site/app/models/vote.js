@@ -28,9 +28,20 @@ var VoteItem = function() {
         });
     };
 
+    var _findOne = function(id, user, callback) {
+        _model.findOne({ itemId: id, userId: user }, function(err, item) {
+            if (err) {
+                fail(err);
+            } else {
+                callback(item);
+            }
+        });
+    }
+
     return {
         createNew: _createNew,
         schema: _schemaModel,
+        findOne: _findOne,
         model: _model
     }
 }();

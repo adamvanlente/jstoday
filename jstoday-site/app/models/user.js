@@ -61,9 +61,31 @@ var User = function() {
         });
     }
 
+    var _findFacebookUserByEmail = function(email, callback) {
+        _model.findOne({ 'facebook.email' : email}, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    }
+
+    var _findGoogleUserByEmail = function(email, callback) {
+        _model.findOne({ 'google.email' : email}, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    }
+
     return {
         createNew: _createNew,
         findByEmail: _findByEmail,
+        findFacebookUserByEmail: _findFacebookUserByEmail,
+        findGoogleUserByEmail: _findGoogleUserByEmail,
         schema: _schemaModel,
         model: _model
     }

@@ -33,7 +33,7 @@ describe('FeedItem', function(){
     });
 
     // =====================
-    // TEST finding a feed item.
+    // TEST finding a feed item by title.
     // _____________________
     it('find a feed item by title.', function(done) {
 
@@ -53,7 +53,7 @@ describe('FeedItem', function(){
     });
 
     // =====================
-    // TEST creating a feed item.
+    // TEST finding a feed item by id.
     // _____________________
     it('find a feed item by id.', function(done) {
 

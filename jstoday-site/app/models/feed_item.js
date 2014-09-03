@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose');
 
+// Create the model for feed items and expose it to our app
 var FeedItem = function() {
 
     var _schemaModel = mongoose.Schema({
@@ -34,8 +35,30 @@ var FeedItem = function() {
         });
     };
 
+    var _findByTitle = function(title, callback) {
+        _model.findOne({ title: title }, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    };
+
+    var _findById = function(id, callback) {
+        _model.findOne({ itemId: id }, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    };
+
     return {
         createNew: _createNew,
+        findByTitle: _findByTitle,
+        findById: _findById,
         schema: _schemaModel,
         model: _model
     }

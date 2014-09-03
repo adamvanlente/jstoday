@@ -33,6 +33,47 @@ describe('FeedItem', function(){
         });
     });
 
+    // =====================
+    // TEST finding a feed item by title.
+    // _____________________
+    it('find a feed item by title.', function(done) {
+
+        var feedItemObject     = {};
+
+        feedItemObject.author  = 'Adam';
+        feedItemObject.content = 'some fake content.';
+        feedItemObject.title   = 'Freaky Deaky';
+
+        FeedItem.createNew(feedItemObject, function(doc) {});
+
+        FeedItem.findByTitle('Freaky Deaky', function(item) {
+            item.title.should.eql('Freaky Deaky');
+            done();
+        })
+
+    });
+
+    // =====================
+    // TEST finding a feed item by id.
+    // _____________________
+    it('find a feed item by id.', function(done) {
+
+        var feedItemObject     = {};
+
+        feedItemObject.author  = 'Adam';
+        feedItemObject.content = 'some fake content.';
+        feedItemObject.title   = 'Freaky Deaky';
+        feedItemObject.itemId  = '019019';
+
+        FeedItem.createNew(feedItemObject, function(doc) {});
+
+        FeedItem.findById('019019', function(item) {
+            item.itemId.should.eql('019019');
+            done();
+        })
+
+    });
+
 });
 
 // Mocha test for a starred item.
@@ -62,6 +103,27 @@ describe('StarredItem', function(){
         });
     });
 
+
+    // =====================
+    // TEST getting starred item by user and item ids.
+    // _____________________
+    it('correctly find starred item by user and item ID.', function(done) {
+
+        var starredItemObject      = {};
+
+        starredItemObject.itemId   = '04444';
+        starredItemObject.userId   = '0123';
+
+        StarredItem.createNew(starredItemObject, function(doc) {});
+
+        StarredItem.findOne('04444', '0123', function(doc) {
+            doc.itemId.should.eql('04444');
+            doc.userId.should.eql('0123');
+            done();
+        })
+
+    });
+
 });
 
 // Mocha test for a voted item.
@@ -87,6 +149,26 @@ describe('VoteItem', function(){
             doc.userId.should.eql('0123');
             done();
         });
+    });
+
+    // =====================
+    // TEST getting voted item by user and item ids.
+    // _____________________
+    it('correctly find voted item by user and item ID.', function(done) {
+
+        var voteItemObject      = {};
+
+        voteItemObject.itemId   = '04444';
+        voteItemObject.userId   = '0123';
+
+        VoteItem.createNew(voteItemObject, function(doc) {});
+
+        VoteItem.findOne('04444', '0123', function(doc) {
+            doc.itemId.should.eql('04444');
+            doc.userId.should.eql('0123');
+            done();
+        })
+
     });
 
 });
