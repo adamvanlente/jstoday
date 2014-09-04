@@ -1,0 +1,86 @@
+.header
+  background-color: $TRANS-WHITE
+  border-bottom: 1px solid $LIGHT-GRAY
+  border-top: 4px solid rgb(241, 234, 234)
+  display: block
+  position: fixed
+  left: 0
+  right: 0
+  top: 0
+
+  +break-for(iphone)
+    border-top: 10px solid rgb(241, 234, 234)
+
+.header--title__text,
+.header--title__tagline
+  display: inline-block
+  text-transform: lowercase
+
+.header--title__text
+  background-color: $SALMON
+  color: $LIGHT-TEXT
+  padding: $GRID * 3
+
+  +break-for(iphone)
+    font-size: 44px
+    padding: $GRID * 8
+
+.header--title__tagline
+  color: $DARK-TEXT
+  font-family: $SANS-ONE
+  font-size: $GRID * 3
+  margin: $GRID * 2
+
+  +break-for(iphone)
+    display: none
+
+
+.header--menu
+  display: inline-block
+  width: 25%
+  position: absolute
+  right: 0
+  text-align: right
+
+.header--menu__loginButton
+  display: inline-block
+  font-size: $GRID * 2
+  margin: ($GRID * 1.5) ($GRID * 3)
+  cursor: pointer
+  +trans($easybreezy)
+
+  em
+    font-style: normal
+    margin: $GRID * 2
+    display: inline-block
+    font-size: $GRID * 3
+    color: $DARK-TEXT
+    +break-for(iphone)
+      display: none
+
+  .fa-user
+    font-size: $GRID * 6
+    +break-for(iphone)
+      font-size: $GRID * 16
+      margin-right: $GRID * 6
+  .no-user
+    color: #DCDCDC
+  .user-logged-in
+    color: $SALMON
+
+  &:hover
+    opacity: 0.8
+
+
+.header--menu__menuButton
+  display: inline-block
+  font-size: $GRID * 6
+  margin: ($GRID * 1.5) ($GRID * 3)
+  color: $SALMON
+  cursor: pointer
+  +trans($easybreezy)
+  +break-for(iphone)
+    font-size: $GRID * 20
+
+  &:hover
+    opacity: 0.8

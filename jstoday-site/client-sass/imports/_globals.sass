@@ -1,0 +1,70 @@
+// Grid Size
+$GRID: 4px
+
+// FONTS
+$SERIF-ONE: Nixie One
+$SANS-ONE: Source Sans Pro
+
+// COLORS
+$SALMON: #e86363
+$TEAL: #54C5B8
+$LIGHT-GRAY: #FCFAFA
+$TRANS-WHITE: rgba(255,255,255,0.98)
+
+$LIGHT-TEXT: #FFF
+$DARK-TEXT: #333
+$MED-TEXT: #666
+
+body
+  font-size: $GRID * 3
+  font-family: $SERIF-ONE
+  background-color: $LIGHT-GRAY
+
+body
+  font-family: "Nixie One", serif
+  color: #333
+  font-size: $GRID * 3
+  background-color: #FCFAFA
+
+.userId
+  display: none
+
+// Media Query Breakpoints
+$iphone-portrait: 320px
+$iphone-landscape: 568px
+$ipad-portrait: 569px
+$ipad-landscape: 1024px
+$desktop: 1025px
+$desktop-large: 1824px
+
+// Breakpoint function
+=break-for($device)
+
+  @if $device == standard
+    @media only screen and (min-width: $desktop)
+      @content
+
+  @if $device == standard-large
+    @media only screen and (min-width: $desktop-large)
+      @content
+
+  @if $device == iphone
+    @media only screen and (min-device-width: $iphone-portrait) and (max-device-width: $iphone-landscape)
+      @content
+    @media only screen and (min-width: $iphone-portrait) and (max-width: $iphone-landscape)
+      @content
+
+  @if $device == ipad
+    @media only screen and (min-device-width: $ipad-portrait) and (max-device-width: $ipad-landscape)
+      @content
+    @media only screen and (min-width: $ipad-portrait) and (max-width: $ipad-landscape)
+      @content
+
+// Transition
+=trans($transtype)
+  -webkit-transition: $transtype
+  -moz-transition:    $transtype
+  -o-transition:      $transtype
+  transition:         $transtype
+
+$easybreezy: ease-in-out all 0.2s

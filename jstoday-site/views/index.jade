@@ -1,6 +1,11 @@
-include components/base
+extends components/base
 
-div
-  | hello index
+block append content
 
-include components/scripts
+  include components/header
+
+  include components/feed
+
+  include components/scripts
+  script(type="text/javascript").
+    jspro.render.getFeedItems();

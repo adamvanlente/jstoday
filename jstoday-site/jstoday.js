@@ -8,7 +8,7 @@
 
 // Add neccessary modules.
 var express      = require('express');
-var port         = 8080;
+var port         = 3000;
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var path         = require('path');
@@ -24,6 +24,19 @@ mongoose.connect(configDB.url);
 
 // Set up the express application.
 var app = express();
+
+// Use our modules.
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(bodyParser());
+
+// Pass Passport to the app.
+require('./config/passport')(passport);
+
+// Set some passport requirements.
+app.use(session({ secret: 'gexpressapp' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set up a public directory for scripts & such.
 app.use(express.static(path.join(__dirname, 'public')));

@@ -1,0 +1,17 @@
+div.header#header
+  span.header--title
+    label.header--title__text
+      | JsToday
+    label.header--title__tagline
+      | keep up with the latest js, css and front end technologies
+  span.header--menu
+    if (user)
+      label(class="header--menu__loginButton", onclick="jspro.logout()")
+        i(class="fa fa-user user-logged-in")
+    else
+      label(class="header--menu__loginButton", onclick="jspro.login()")
+        em
+          | Login
+        i(class="fa fa-user no-user")
+    label(class="header--menu__menuButton")
+      i(class="fa fa-bars")

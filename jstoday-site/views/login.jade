@@ -1,2 +1,38 @@
-div
-  | hello login
+extends components/base
+
+block append content
+
+  include components/header
+
+  div.loginScreen
+
+    h1
+      span(class="loginScreen--header")= mode
+
+    form(action="/#{mode}", method="post")
+
+      include components/login-form
+
+      button(type="submit", class="")= mode
+
+    span.loginScreen--socialIcons
+
+      a(href="/auth/facebook", class="facebook")
+        span(class="fa fa-facebook")
+        | facebook
+
+      a(href="/auth/google", class="google")
+        span(class="fa fa-google-plus")
+        | google
+
+    if (mode == 'signup')
+
+      a(href="/login")
+        span(class="fa fa-user")
+        | login
+    else
+      a(href="/signup")
+        span(class="fa fa-user")
+        | signup
+
+  include components/scripts

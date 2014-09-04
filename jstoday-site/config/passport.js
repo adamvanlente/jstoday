@@ -5,13 +5,13 @@
 // Get Passport going with some strategies.
 var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 // Set user model.
-var User       		= require('../app/models/user');
+var User       		   = require('../app/models/user');
 
 // Get the authorization variables.
-var configAuth = require('./auth');
+var configAuth       = require('./auth');
 
 // Expose function to app using module.exports.
 module.exports = function(passport) {
@@ -23,8 +23,8 @@ module.exports = function(passport) {
 
     // Deserialize user for session.
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
+        User.findById(id, function(user) {
+            done(null, user);
         });
     });
 
@@ -38,10 +38,7 @@ module.exports = function(passport) {
 
         process.nextTick(function() {
 
-            User.findOne({ 'local.email' :  email }, function(err, user) {
-
-                if (err)
-                    return done(err);
+            User.findByEmail(email, function(user) {
 
                 if (user) {
                     return done(null, false);
@@ -51,9 +48,7 @@ module.exports = function(passport) {
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
 
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
+                    User.createNew(newUser, function(doc) {
                         return done(null, newUser);
                     });
                 }
@@ -69,17 +64,13 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
-        User.findOne({ 'local.email' : email }, function(err, user) {
-
-            if (err)
-                return done(err)
+        User.findByEmail(email, function(user) {
 
             if (!user)
                 return done(null, false);
 
             if (!user.validPassword(password))
                 return done(null, false);
-
             return done(null, user);
         });
     }));
@@ -96,10 +87,7 @@ module.exports = function(passport) {
 
         process.nextTick(function() {
 
-          User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
-
-              if (err)
-                  return done(err)
+          User.findFacebookUserById(profile.id, function(user) {
 
               if (user) {
                   return done(null, user);
@@ -111,15 +99,10 @@ module.exports = function(passport) {
                   newUser.facebook.name     = profile.name.givenName + ' ' + profile.name.familyName;
                   newUser.facebook.email    = profile.emails[0].value;
 
-
-                  // Save the user to the database
-                  newUser.save(function(err) {
-                      if (err)
-                          throw err;
-
-                      // if success, return new user
+                  User.createNew(newUser, function(doc) {
                       return done(null, newUser);
                   });
+
               }
 
           });
@@ -137,12 +120,9 @@ module.exports = function(passport) {
 
 		    process.nextTick(function() {
 
-  	        User.findOne({ 'google.id' : profile.id }, function(err, user) {
-  	            if (err)
-  	                return done(err);
+  	        User.findGoogleUserById( profile.id, function(user) {
 
   	            if (user) {
-
   	                return done(null, user);
   	            } else {
 
@@ -152,11 +132,10 @@ module.exports = function(passport) {
   	                newUser.google.name  = profile.displayName;
   	                newUser.google.email = profile.emails[0].value; // pull the first email
 
-  	                newUser.save(function(err) {
-  	                    if (err)
-  	                        throw err;
-  	                    return done(null, newUser);
-  	                });
+                    User.createNew(newUser, function(doc) {
+                        return done(null, newUser);
+                    });
+
   	            }
   	        });
 	    });

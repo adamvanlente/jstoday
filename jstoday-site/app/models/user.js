@@ -51,6 +51,17 @@ var User = function() {
         });
     };
 
+    var _findById = function(id, callback) {
+        _model.findOne({ '_id' : id}, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    }
+
+
     var _findByEmail = function(email, callback) {
         _model.findOne({ 'local.email' : email}, function(err, doc) {
             if(err) {
@@ -71,8 +82,28 @@ var User = function() {
         });
     }
 
+    var _findFacebookUserById = function(id, callback) {
+        _model.findOne({ 'facebook.id' : id}, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    }
+
     var _findGoogleUserByEmail = function(email, callback) {
         _model.findOne({ 'google.email' : email}, function(err, doc) {
+            if(err) {
+                fail(err);
+            } else {
+                callback(doc);
+            }
+        });
+    }
+
+    var _findGoogleUserById = function(id, callback) {
+        _model.findOne({ 'google.id' : id}, function(err, doc) {
             if(err) {
                 fail(err);
             } else {
@@ -84,8 +115,11 @@ var User = function() {
     return {
         createNew: _createNew,
         findByEmail: _findByEmail,
+        findById: _findById,
         findFacebookUserByEmail: _findFacebookUserByEmail,
+        findFacebookUserById: _findFacebookUserById,
         findGoogleUserByEmail: _findGoogleUserByEmail,
+        findGoogleUserById: _findGoogleUserById,
         schema: _schemaModel,
         model: _model
     }
