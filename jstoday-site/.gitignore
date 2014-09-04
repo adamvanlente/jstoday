@@ -1,4 +1,6 @@
-config/*
+config/auth.js
+config/database.js
 node_modules/*
 npm-debug.log
 public
+.DS_Store

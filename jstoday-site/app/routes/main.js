@@ -6,51 +6,45 @@ module.exports = function(app, passport) {
 
 	// HOME
 	app.get('/', function(req, res) {
-
 			res.render('index.jade', { user : req.user });
-
 	});
 
 	// LOGIN GET
 	app.get('/login', function(req, res) {
-
-			// Login screen.
-
+			res.render('login.jade', { mode: 'login' });
 	});
 
 	// LOGIN POST
 	app.post('/login', passport.authenticate('local-login', {
-
-			// Route for logging in.
-
+			successRedirect : '/',
+			failureRedirect : '/login'
 	}));
 
 	// SIGNUP GET
 	app.get('/signup', function(req, res) {
-
-			// Signup screen.
-
+			res.render('login.jade', { mode: 'signup' });
 	});
 
 	// SIGNUP POST
 	app.post('/signup', passport.authenticate('local-signup', {
-
-			// Route to sign up.
-
+			successRedirect : '/',
+			failureRedirect : '/signup',
 	}));
 
+	// ROUTE FOR FACEBOOK SIGN IN
+	app.get('/auth/facebook', passport.authenticate('facebook', {
+			scope : 'email'
+	}));
 
-	// Sign into facebook.
-	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
-	app.get('/auth/facebook/callback',
-		passport.authenticate('facebook', {
-				successRedirect : '/',
-				failureRedirect : '/'
+	app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+			successRedirect : '/',
+			failureRedirect : '/'
 		}));
 
-	// Sign into google.
-	app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+	// GOOGLE ROUTE
+	app.get('/auth/google', passport.authenticate('google', {
+			scope : ['profile', 'email']
+	}));
 
 	app.get('/auth/google/callback',
 			passport.authenticate('google', {
@@ -58,10 +52,21 @@ module.exports = function(app, passport) {
 					failureRedirect : '/'
 			}));
 
-	// Log out.
+	// LOGOUT ROUTE
 	app.get('/logout', function(req, res) {
-		req.logout();
-		res.redirect('/');
+			req.logout();
+			res.redirect('/');
 	});
 
 };
+
+// Confirm that a user is logged in.
+function isLoggedIn(req, res, next) {
+
+	// Move along if all is well.
+	if (req.isAuthenticated())
+		return next();
+
+	// Kick back to home page if no user is detected.
+	res.redirect('/');
+}

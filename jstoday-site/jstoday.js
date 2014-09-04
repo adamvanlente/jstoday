@@ -25,8 +25,17 @@ mongoose.connect(configDB.url);
 // Set up the express application.
 var app = express();
 
+// Set up a public directory for scripts & such.
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Set up routes.
 require('./app/routes/feeds.js')(app);
+require('./app/routes/main.js')(app, passport);
+
+
+app.use(function(req, res, next) {
+    res.render('404.jade');
+});
 
 // launch ======================================================================
 app.listen(port);
