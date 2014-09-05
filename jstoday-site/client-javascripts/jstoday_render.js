@@ -44,7 +44,7 @@ jspro.render = {
             .attr('href', link)
             .attr('target', 'new')
             .attr('class', 'sourceSpan ' + item.type)
-            .html(icon + sourceType + ' from ' + source);
+            .html(icon + sourceType + ' from ' + '<b>' + source + '</b>');
 
         feedItem.append(titleSpan);
 
@@ -62,6 +62,26 @@ jspro.render = {
         }
 
         feedItem.append(linkToSource);
+
+        if (jspro.globals.userId) {
+
+            var isStarred = jspro.globals.starredList.indexOf(item._id) != -1;
+            var starClass = isStarred ?
+                'fa fa-star star-starred' : 'fa fa-star-o star-unstarred';
+            starClass += ' feed--item__star';
+
+            var onclickUrl = '/star/' + item._id + '/' +
+                jspro.globals.userId + '/' + item.type;
+            var onclick = 'jspro.toggleStar(\'' + onclickUrl + '\')';
+            var starId = 'star_' + item._id;
+
+            var star = $('<em></em>')
+                .attr('id', starId)
+                .attr('onclick', onclick)
+                .attr('class', starClass);
+            feedItem.append(star);
+        }
+
         this.feedDiv.append(feedItem);
     },
 
@@ -88,6 +108,25 @@ jspro.render = {
              jspro.uiMessage(err, 'messageBar--error');
          }
       });
+
+    },
+
+    toggleStarredItem: function(res) {
+
+      var id = res.itemId;
+      var starred = res.starred
+      var star = $('#star_' + id);
+
+      if (starred) {
+          var starredClass =
+              'fa fa-star feed--item__star star-starred tada animated';
+          star.attr('class', starredClass);
+          jspro.globals.starredList.push(id);
+      } else {
+          star.attr('class', 'fa fa-star-o feed--item__star star-unstarred');
+          var index = jspro.globals.starredList.indexOf(id);
+          jspro.globals.starredList.splice(index, 1);
+      }
 
     },
 

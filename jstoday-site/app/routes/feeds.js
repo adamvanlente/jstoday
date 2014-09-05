@@ -5,7 +5,6 @@
 // Get the models for the feed items.
 var FeedItem      = require('../models/feed_item');
 var StarredItem   = require('../models/starred_item');
-var VoteItem      = require('../models/vote');
 
 // TODO this script needs MAD comments.
 
@@ -105,10 +104,16 @@ module.exports = function(app) {
         var start  = req.params.start;
 
         var params = {userId: user};
+
+        var count;
+        StarredItem.getCount(params, function(itemCount) {
+            count = itemCount;
+        });
+
         var exclusions = {__v: 0};
         var sortParams = {sort: {date: -1}};
         StarredItem.findMany(params, exclusions, sortParams, function(doc) {
-            res.json(doc);
+            renderResponse(count, doc, true, res);
         });
 
     });

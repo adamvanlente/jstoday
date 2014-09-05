@@ -65,6 +65,19 @@ var jspro = {
       });
   },
 
+  toggleStar: function(url) {
+    $.ajax({
+       url: url,
+       type: 'POST',
+       success: function(data){
+           jspro.render.toggleStarredItem(data);
+       },
+       error: function(err) {
+           jspro.uiMessage(err, 'messageBar--error');
+       }
+    });
+  },
+
   startJsing: function() {
       if (this.globals.userId) {
           this.getUsersStarredItems(function() {

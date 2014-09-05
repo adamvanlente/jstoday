@@ -50,10 +50,13 @@
     &.twitter
       background-color: $TEAL
       color: $LIGHT-TEXT
+      font-family: $SANS-ONE
 
     &.blog
       background-color: rgb(97, 93, 93)
       color: $LIGHT-TEXT
+      font-family: $SANS-ONE
+
 
     &:hover
       opacity: 0.8
@@ -105,3 +108,24 @@
   &:hover
     color: $SALMON
     background-color: $LIGHT-GRAY
+
+.feed--item__star
+  position: absolute
+  right: 250px
+  font-size: 24px
+  cursor: pointer
+  +trans($easybreezy)
+  +break-for(iphone)
+    right: $GRID * 4
+    font-size: 32px
+    margin-top: -4px
+
+  &:hover
+    opacity: 0.8
+
+
+.star-unstarred
+  color: #CACACA
+
+.star-starred
+  color: gold

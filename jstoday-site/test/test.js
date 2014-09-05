@@ -1,7 +1,6 @@
 var mongoose      = require('mongoose');
 var FeedItem      = require('../app/models/feed_item');
 var StarredItem   = require('../app/models/starred_item');
-var VoteItem      = require('../app/models/vote');
 var User          = require('../app/models/user');
 
 // Connecting to a local test database or creating it on the fly
@@ -117,53 +116,6 @@ describe('StarredItem', function(){
         StarredItem.createNew(starredItemObject, function(doc) {});
 
         StarredItem.findOne('04444', '0123', function(doc) {
-            doc.itemId.should.eql('04444');
-            doc.userId.should.eql('0123');
-            done();
-        })
-
-    });
-
-});
-
-// Mocha test for a voted item.
-describe('VoteItem', function(){
-
-    // Delete model after each run.
-    afterEach(function(done){
-        VoteItem.model.remove({}, function() {
-            done();
-        });
-    });
-
-    // =====================
-    // TEST voting on an item.
-    // _____________________
-    it('correctly votes on an item', function(done) {
-
-        var voteItemObject      = {};
-
-        voteItemObject.userId   = '0123';
-
-        VoteItem.createNew(voteItemObject, function(doc) {
-            doc.userId.should.eql('0123');
-            done();
-        });
-    });
-
-    // =====================
-    // TEST getting voted item by user and item ids.
-    // _____________________
-    it('correctly find voted item by user and item ID.', function(done) {
-
-        var voteItemObject      = {};
-
-        voteItemObject.itemId   = '04444';
-        voteItemObject.userId   = '0123';
-
-        VoteItem.createNew(voteItemObject, function(doc) {});
-
-        VoteItem.findOne('04444', '0123', function(doc) {
             doc.itemId.should.eql('04444');
             doc.userId.should.eql('0123');
             done();

@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up routes.
 require('./app/routes/feeds.js')(app);
+require('./app/routes/updates.js')(app);
 require('./app/routes/main.js')(app, passport);
 
 
