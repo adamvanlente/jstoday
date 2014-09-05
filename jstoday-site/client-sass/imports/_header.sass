@@ -1,15 +1,13 @@
 .header
   background-color: $TRANS-WHITE
   border-bottom: 1px solid $LIGHT-GRAY
-  border-top: 4px solid rgb(241, 234, 234)
+  border-top: 4px solid $TEAL
   display: block
   position: fixed
   left: 0
   right: 0
   top: 0
-
-  +break-for(iphone)
-    border-top: 10px solid rgb(241, 234, 234)
+  z-index: 2
 
 .header--title__text,
 .header--title__tagline
@@ -20,24 +18,24 @@
   background-color: $SALMON
   color: $LIGHT-TEXT
   padding: $GRID * 3
-
+  +trans($easybreezy)
   +break-for(iphone)
-    font-size: 44px
-    padding: $GRID * 8
+    font-size: 16px
+  &:hover
+    cursor: pointer
+    opacity: 0.7
 
 .header--title__tagline
   color: $DARK-TEXT
   font-family: $SANS-ONE
   font-size: $GRID * 3
   margin: $GRID * 2
-
   +break-for(iphone)
     display: none
 
-
 .header--menu
   display: inline-block
-  width: 25%
+  width: 35%
   position: absolute
   right: 0
   text-align: right
@@ -58,11 +56,9 @@
     +break-for(iphone)
       display: none
 
-  .fa-user
+  .fa
     font-size: $GRID * 6
-    +break-for(iphone)
-      font-size: $GRID * 16
-      margin-right: $GRID * 6
+
   .no-user
     color: #DCDCDC
   .user-logged-in
@@ -79,8 +75,6 @@
   color: $SALMON
   cursor: pointer
   +trans($easybreezy)
-  +break-for(iphone)
-    font-size: $GRID * 20
 
   &:hover
     opacity: 0.8

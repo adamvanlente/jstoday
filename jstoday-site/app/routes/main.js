@@ -9,26 +9,59 @@ module.exports = function(app, passport) {
 			res.render('index.jade', { user : req.user });
 	});
 
+	// HOME
+	app.get('/account', function(req, res) {
+			res.render('account.jade', { user : req.user });
+	});
+
 	// LOGIN GET
 	app.get('/login', function(req, res) {
-			res.render('login.jade', { mode: 'login' });
+			var msg = {
+				mode: 'login',
+			};
+
+			res.render('login.jade', { msg: msg });
 	});
 
 	// LOGIN POST
 	app.post('/login', passport.authenticate('local-login', {
 			successRedirect : '/',
-			failureRedirect : '/login'
+			failureRedirect : '/login/incorrect'
 	}));
 
 	// SIGNUP GET
+	app.get('/login/incorrect', function(req, res) {
+			var msg = {
+				mode: 'login',
+				msg: 'incorrect user/pass combination.  try again.'
+			};
+
+			res.render('login.jade', { msg: msg });
+	});
+
+	// SIGNUP GET
 	app.get('/signup', function(req, res) {
-			res.render('login.jade', { mode: 'signup' });
+			var msg = {
+				mode: 'signup',
+			};
+
+			res.render('login.jade', { msg: msg });
+	});
+
+	// SIGNUP - Existing user message.
+	app.get('/signup/existing', function(req, res) {
+			var msg = {
+				mode: 'signup',
+				msg: 'that email is in our system. login, or sign up with a different address.'
+			};
+
+			res.render('login.jade', { msg: msg });
 	});
 
 	// SIGNUP POST
 	app.post('/signup', passport.authenticate('local-signup', {
 			successRedirect : '/',
-			failureRedirect : '/signup',
+			failureRedirect : '/signup/existing'
 	}));
 
 	// ROUTE FOR FACEBOOK SIGN IN

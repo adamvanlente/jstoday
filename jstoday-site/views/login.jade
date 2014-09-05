@@ -7,32 +7,42 @@ block append content
   div.loginScreen
 
     h1
-      span(class="loginScreen--header")= mode
+      span(class="loginScreen--header")= msg.mode
 
-    form(action="/#{mode}", method="post")
+    form(action="/#{msg.mode}", method="post")
 
       include components/login-form
 
-      button(type="submit", class="")= mode
+      if (msg.msg)
+        h3.msg= msg.msg
+
+      button(type="submit", class="#{msg.mode}")= msg.mode
 
     span.loginScreen--socialIcons
 
+      h2
+        | other options
+
+      if (msg.mode == 'signup')
+
+        a(href="/login", class="login")
+          span(class="fa fa-user")
+          label
+            | login
+      else
+        a(href="/signup", class="signup")
+          span(class="fa fa-user")
+          label
+            | new user
+
       a(href="/auth/facebook", class="facebook")
         span(class="fa fa-facebook")
-        | facebook
+        label
+          | facebook
 
       a(href="/auth/google", class="google")
         span(class="fa fa-google-plus")
-        | google
-
-    if (mode == 'signup')
-
-      a(href="/login")
-        span(class="fa fa-user")
-        | login
-    else
-      a(href="/signup")
-        span(class="fa fa-user")
-        | signup
+        label
+          | google
 
   include components/scripts

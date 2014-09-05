@@ -1,0 +1,42 @@
+.accountDetails
+  display: block
+  margin: 0 auto
+  width: 350px
+  margin-top: $GRID * 20
+  text-align: center
+  +break-for(iphone)
+    width: 300px
+    margin-top: $GRID * 15
+
+
+  span
+    font-size: 20px
+    display: block
+    padding: 4px
+
+  label
+    color: black
+
+    &.oauth
+      display: block
+      padding: 24px
+      color: #BBB0B0
+
+  button
+    display: block
+    width: 30%
+    margin: ($GRID * 4) auto
+    -webkit-appearance: none
+    border: none
+    color: #fff
+    font-family: Source sans pro
+    font-size: $GRID * 4
+    padding: ($GRID * 1.5) ($GRID * 3)
+    border-radius: 1px
+    cursor: pointer
+    color: $LIGHT-TEXT
+    background-color: $SALMON
+    +trans($easybreezy)
+
+    &:hover
+      opacity: 0.8

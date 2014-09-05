@@ -3,7 +3,8 @@ var jspro = jspro || {}
 jspro.onload = {
 
     loader: function() {
-        if (window.location.pathname == '/login') {
+        var path = window.location.pathname;
+        if (path.search('/login') != -1 || path.search('/signup') != -1) {
             $('.header--menu__loginButton').hide();
         }
     }

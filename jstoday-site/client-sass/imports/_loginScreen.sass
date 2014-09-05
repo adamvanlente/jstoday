@@ -1,0 +1,148 @@
+.loginScreen,
+.loginScreen--socialIcons
+  display: block
+  margin: 0 auto
+  width: 350px
+  +break-for(iphone)
+    width: 300px
+
+.loginScreen
+  margin-top: $GRID * 20
+  text-align: center
+  +break-for(iphone)
+    margin-top: $GRID * 15
+
+  h1
+    font-weight: normal
+
+  form
+    display: block
+    width: 99%
+    margin: 0 auto
+
+    h3.msg
+      display: block
+      background-color: rgb(241, 183, 183)
+      font-size: $GRID * 3
+      color: #fff
+      padding: 2px
+      border-radius: 2px
+
+    button
+      display: block
+      width: 30%
+      margin: 0 auto
+      -webkit-appearance: none
+      border: none
+      color: #fff
+      font-family: Source sans pro
+      font-size: $GRID * 4
+      padding: ($GRID * 1.5) ($GRID * 3)
+      border-radius: 1px
+      cursor: pointer
+      +trans($easybreezy)
+
+      &.login
+        background-color: $SALMON
+
+      &.signup
+        background-color: $TEAL
+
+      &:hover
+        opacity: 0.8
+
+    span
+      display: block
+      text-align: left
+      width: 95%
+      margin: 0 auto
+      margin-bottom: $GRID * 3
+      +break-for(iphone)
+        text-align: center
+
+      label
+        display: inline-block
+        width: 30%
+        font-size: $GRID * 4
+        +break-for(iphone)
+          display: none
+
+      input
+        display: inline-block
+        width: 60%
+        -webkit-appearance: none
+        border: 1px solid #F1F1F1
+        background: white
+        padding: $GRID * 3
+        font-size: 14px
+        font-family: Nixie One
+        color: #e86363
+        +break-for(iphone)
+          display: block
+          margin: 0 auto
+          width: 90%
+
+.loginScreen--socialIcons
+  margin-top: $GRID * 6
+
+  h2
+    font-weight: normal
+    color: $MED-TEXT
+    font-size: 12px
+
+  a
+    display: block
+    width: 30%
+    margin: 0 auto
+    text-decoration: none
+    border: 1px solid $LIGHT-GRAY
+    font-family: Source sans pro
+    font-size: $GRID * 4
+    padding: ($GRID * 1.5) ($GRID * 3)
+    border-radius: 1px
+    cursor: pointer
+    +trans($easybreezy)
+    +break-for(iphone)
+      width: 50%
+
+    &.google
+      background-color: $GOOGLE
+      color: $LIGHT-TEXT
+      &:hover
+        background-color: $LIGHT-TEXT
+        color: $GOOGLE
+        border-color: $GOOGLE
+
+    &.facebook
+      background-color: $FB
+      color: $LIGHT-TEXT
+      &:hover
+        background-color: $LIGHT-TEXT
+        color: $FB
+        border-color: $FB
+
+    &.login
+      background-color: $SALMON
+      color: $LIGHT-TEXT
+      &:hover
+        background-color: $LIGHT-TEXT
+        color: $SALMON
+        border-color: $SALMON
+
+    &.signup
+      background-color: $TEAL
+      color: $LIGHT-TEXT
+      &:hover
+        background-color: $LIGHT-TEXT
+        color: $TEAL
+        border-color: $TEAL
+
+
+    span
+      display: inline-block
+      width: 30px
+
+    label
+      width: 70px
+      display: inline-block
+      text-align: left

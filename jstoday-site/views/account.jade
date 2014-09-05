@@ -4,11 +4,8 @@ block append content
 
   include components/header
 
-  include components/feed
-
-  if (user)
-    h4.userId#userId= user.id
+  include components/account-details
 
   include components/scripts
   script(type="text/javascript").
-    jspro.startJsing();
+    jspro.render.getFeedItems();

@@ -32,6 +32,49 @@ module.exports = function(app) {
 
     });
 
+
+    // ===============
+    // GET ALL BY DATE
+    // _______________
+    app.get('/feed/tweets/:start', function(req, res) {
+
+        // Start the response at this record.
+        var start = req.params.start || 0;
+
+        var count;
+        FeedItem.getCount({ type: 'twitter' }, function(itemCount) {
+            count = itemCount;
+        });
+
+        var exclusions = {__v: 0};
+        var sortParams = {sort: {date: -1}, skip: start, limit: 20};
+        FeedItem.findMany({type : 'twitter'}, exclusions, sortParams, function(items) {
+            renderResponse(count, items, true, res);
+        });
+
+    });
+
+    // ===============
+    // GET ALL BY DATE
+    // _______________
+    app.get('/feed/blogs/:start', function(req, res) {
+
+        // Start the response at this record.
+        var start = req.params.start || 0;
+
+        var count;
+        FeedItem.getCount({ type: 'blog' }, function(itemCount) {
+            count = itemCount;
+        });
+
+        var exclusions = {__v: 0};
+        var sortParams = {sort: {date: -1}, skip: start, limit: 20};
+        FeedItem.findMany({type : 'blog'}, exclusions, sortParams, function(items) {
+            renderResponse(count, items, true, res);
+        });
+
+    });
+
     // ===============
     // GET ALL BY DATE
     // _______________

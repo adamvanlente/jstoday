@@ -1,17 +1,26 @@
 div.header#header
   span.header--title
-    label.header--title__text
+    label(class="header--title__text", onclick="jspro.goto.home()")
       | JsToday
     label.header--title__tagline
       | keep up with the latest js, css and front end technologies
   span.header--menu
     if (user)
-      label(class="header--menu__loginButton", onclick="jspro.logout()")
-        i(class="fa fa-user user-logged-in")
+      label(class="header--menu__loginButton", onclick="jspro.goto.account()")
+        if (user.local.email)
+          i(class="fa fa-user user-logged-in")
+
+        if (user.facebook.email)
+          i(class="fa fa-facebook user-logged-in")
+
+        if (user.google.email)
+          i(class="fa fa-google user-logged-in")
     else
-      label(class="header--menu__loginButton", onclick="jspro.login()")
+      label(class="header--menu__loginButton", onclick="jspro.goto.login()")
         em
           | Login
         i(class="fa fa-user no-user")
-    label(class="header--menu__menuButton")
+    label(class="header--menu__menuButton", onclick="jspro.goto.menu()")
       i(class="fa fa-bars")
+
+include menu

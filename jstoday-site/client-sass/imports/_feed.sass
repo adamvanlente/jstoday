@@ -1,0 +1,107 @@
+.feed
+  display: block
+  width: 500px
+  margin: 60px auto
+  text-align: left
+
+  +break-for(iphone)
+    width: 300px
+
+.feed--item
+  display: block
+  margin: 12px auto
+  width: 100%
+  background-color: #f8f3f3
+  border-radius: 1px
+  box-shadow: 0 0 2px rgba(0,0,0,0.05)
+
+  .fullArticle
+    display: block
+    width: 450px
+    text-align: center
+    margin: 12px auto
+    font-family: $SANS-ONE
+    -webkit-appearance: none
+    border: 1px solid $TEAL
+    background-color: $TEAL
+    color: white
+    padding: 12px
+    border-radius: 1px
+    cursor: pointer
+    +trans($easybreezy)
+    +break-for(iphone)
+      width: 250px
+
+    &:hover
+      color: rgb(97, 93, 93)
+      background-color: $LIGHT-GRAY
+      border-color: rgb(97, 93, 93)
+
+  a
+    text-decoration: none
+    display: inline-block
+
+    &.sourceSpan
+      margin: 0px 12px 12px
+      padding: 4px
+      cursor: pointer
+      +trans($easybreezy)
+
+    &.twitter
+      background-color: $TEAL
+      color: $LIGHT-TEXT
+
+    &.blog
+      background-color: rgb(97, 93, 93)
+      color: $LIGHT-TEXT
+
+    &:hover
+      opacity: 0.8
+
+    i
+      margin-right: 4px
+
+  span
+
+    &.title
+      display: block
+      padding: 12px
+      text-align: left
+      font-family: $SANS-ONE
+      font-size: 18px
+      color: rgb(90, 123, 180)
+
+    &.content
+      margin: $GRID * 4
+      display: block
+      max-height: 150px
+      overflow: hidden
+      font-family: source sans pro
+      font-size: 13px
+      a
+        color: rgb(90, 123, 180)
+      video
+        display: none
+      img
+        display: block
+        width: 25%
+        height: auto
+        margin: 0 auto
+
+.feed--readMoreButton
+  display: block
+  width: 100%
+  margin: 12px auto
+  font-family: $SANS-ONE
+  -webkit-appearance: none
+  border: 1px solid
+  background-color: #fd8375
+  color: white
+  padding: 12px
+  border-radius: 1px
+  cursor: pointer
+  +trans($easybreezy)
+
+  &:hover
+    color: $SALMON
+    background-color: $LIGHT-GRAY

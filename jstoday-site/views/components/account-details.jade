@@ -1,0 +1,28 @@
+div.accountDetails
+
+  if (user)
+
+    if (user.local.email)
+      div
+        label
+          |account: #{user.local.email}
+
+    if (user.facebook.email)
+      div
+        label
+          | account: #{user.facebook.email}
+        label.oauth
+          | logged in with
+          span(class="fa fa-facebook")
+
+    if (user.google.email)
+      div
+        label
+          |account: #{user.google.email}
+        label.oauth
+          | logged in with
+          span(class="fa fa-google")
+
+
+    button(onclick="jspro.goto.logout()")
+      | logout
