@@ -113,7 +113,19 @@ module.exports = function(app) {
         var exclusions = {__v: 0};
         var sortParams = {sort: {date: -1}};
         StarredItem.findMany(params, exclusions, sortParams, function(doc) {
-            renderResponse(count, doc, true, res);
+
+            var items = [];
+
+            for (var i = 0; i < doc.length; i++) {
+               var feedItem = doc[i];
+               items.push(feedItem.itemId);
+            }
+            var params = { _id : { $in: items } };
+            var sortParams = {sort: {date: -1}, skip: start, limit: 20};
+            FeedItem.findMany( params, {}, {}, function(docs) {
+                renderResponse(count, docs, true, res);
+            });
+
         });
 
     });

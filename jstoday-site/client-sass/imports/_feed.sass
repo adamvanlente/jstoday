@@ -22,8 +22,8 @@
     margin: 12px auto
     font-family: $SANS-ONE
     -webkit-appearance: none
-    border: 1px solid $TEAL
-    background-color: $TEAL
+    border: 1px solid $SALMON
+    background-color: $SALMON
     color: white
     padding: 12px
     border-radius: 1px
@@ -110,15 +110,14 @@
     background-color: $LIGHT-GRAY
 
 .feed--item__star
-  position: absolute
-  right: 250px
   font-size: 24px
   cursor: pointer
   +trans($easybreezy)
   +break-for(iphone)
-    right: $GRID * 4
+    display: inline-block
+    margin-top: 12px
     font-size: 32px
-    margin-top: -4px
+
 
   &:hover
     opacity: 0.8
@@ -129,3 +128,10 @@
 
 .star-starred
   color: gold
+
+
+.sourceHolder
+  display: inline-block
+  width: 90%
+  +break-for(iphone)
+    width: 85%

@@ -23,6 +23,9 @@ div.accountDetails
           | logged in with
           span(class="fa fa-google")
 
+    if (user)
+      h4.userId#userId= user.id
+
 
     button(onclick="jspro.goto.logout()")
       | logout

@@ -17,8 +17,9 @@ var jspro = {
       modes: {
 
           TWITTER: 'twitter',
-          BLOG: 'blog',
-          ALL: 'all'
+          BLOGS: 'blogs',
+          ALL: 'all',
+          STARRED: 'starred'
 
       }
 
@@ -55,6 +56,13 @@ var jspro = {
          type: 'GET',
          success: function(data){
              jspro.globals.starredList = data;
+
+             if (jspro.globals.starredList.length == 0) {
+                 $('.starred-items-button').hide();
+             } else {
+                 $('.starred-items-button').show();
+             }
+
              if (callback) {
                 callback();
              }
@@ -79,6 +87,7 @@ var jspro = {
   },
 
   startJsing: function() {
+      $('.loader').hide();
       if (this.globals.userId) {
           this.getUsersStarredItems(function() {
               return jspro.render.getFeedItems();

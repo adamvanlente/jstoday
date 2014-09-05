@@ -5,7 +5,13 @@ jspro.render = {
     feedDiv: $('#feed'),
 
     menu: function() {
-        console.log('rendering menu');
+        var className = $('#menu').attr('class');
+
+        if (className.search('hidden') == -1) {
+            $('#menu').attr('class', 'menu menu--hidden');
+        } else {
+            $('#menu').attr('class', 'menu menu--revealed');
+        }
     },
 
     feed: function(items) {
@@ -15,7 +21,7 @@ jspro.render = {
         }
 
         var articleLimit = items.count
-        if (jspro.globals.feedIndex < articleLimit) {
+        if (jspro.globals.feedIndex < articleLimit && items.count > 20) {
             this.insertLoadMoreArticlesButton();
         }
     },
@@ -40,12 +46,14 @@ jspro.render = {
         var source = isTwitter ? item.author : item.source;
         var link = isTwitter ?
             'http://www.twitter.com/statuses/' + item.itemId : item.source_url;
+        var sourceHolder = $('<div></div>')
+            .attr('class', 'sourceHolder');
         var linkToSource = $('<a></a>')
             .attr('href', link)
             .attr('target', 'new')
             .attr('class', 'sourceSpan ' + item.type)
             .html(icon + sourceType + ' from ' + '<b>' + source + '</b>');
-
+        sourceHolder.append(linkToSource);
         feedItem.append(titleSpan);
 
         if (!isTwitter) {
@@ -61,7 +69,7 @@ jspro.render = {
             feedItem.append(readFullArticleButton);
         }
 
-        feedItem.append(linkToSource);
+        feedItem.append(sourceHolder);
 
         if (jspro.globals.userId) {
 
@@ -93,16 +101,64 @@ jspro.render = {
         this.feedDiv.append(button);
     },
 
-    getFeedItems: function() {
+    resetFeedMode: function(mode) {
+        jspro.globals.userId = $('#userId').html();
+        jspro.globals.feedIndex = 0;
+
+        this.feedDiv.html('');
+        this.getFeedItems(mode);
+        $('#menu').attr('class', 'menu menu--hidden');
+    },
+
+    resetModeIcons: function(mode) {
+
+        var collection = $('.mode-icon');
+        for (var i = 0; i < collection.length; i++) {
+            var item = $('#' + collection[i].id);
+            var className = item.attr('class');
+            var newClassName = className.replace(' selected', ' unselected');
+            item.attr('class', newClassName);
+        }
+
+        var updatedClass = 'mode-icon ' + mode + ' selected';
+        $('#filter_' + mode).attr('class', updatedClass);
+    },
+
+    setFeedMode: function(mode) {
+        mode = mode || 'all';
+        if (mode == jspro.globals.modes.ALL) {
+            jspro.globals.currentMode = jspro.globals.modes.ALL;
+            jspro.globals.baseFeedUrl = '/feed/all/';
+        } else if (mode == jspro.globals.modes.TWITTER) {
+            jspro.globals.currentMode = jspro.globals.modes.TWITTER;
+            jspro.globals.baseFeedUrl = '/feed/tweets/';
+        } else if (mode == jspro.globals.modes.BLOGS) {
+            jspro.globals.currentMode = jspro.globals.modes.BLOGS;
+            jspro.globals.baseFeedUrl = '/feed/blogs/';
+        } else if (mode == jspro.globals.modes.STARRED) {
+            jspro.globals.currentMode = jspro.globals.modes.STARRED;
+            jspro.globals.baseFeedUrl =
+                '/feed/starred/' + jspro.globals.userId + '/';
+        }
+        return mode;
+    },
+
+    getFeedItems: function(mode) {
+      $('.loader').show();
+      var mode = this.setFeedMode(mode);
+      this.resetModeIcons(mode);
 
       var url = jspro.globals.baseFeedUrl + jspro.globals.feedIndex;
-      console.log(url);
+
       $.ajax({
          url: url,
          type: 'GET',
          success: function(data){
+
              jspro.render.feed(data);
              jspro.globals.feedIndex += jspro.globals.feedIndexIncrement;
+
+             $('.loader').hide();
          },
          error: function(err) {
              jspro.uiMessage(err, 'messageBar--error');
@@ -126,6 +182,12 @@ jspro.render = {
           star.attr('class', 'fa fa-star-o feed--item__star star-unstarred');
           var index = jspro.globals.starredList.indexOf(id);
           jspro.globals.starredList.splice(index, 1);
+      }
+
+      if (jspro.globals.starredList.length == 0) {
+          $('.starred-items-button').hide();
+      } else {
+          $('.starred-items-button').show();
       }
 
     },

@@ -1,1 +1,18 @@
-div(class="menu menu--revealed", id="menu")
+div(class="menu menu--hidden", id="menu")
+  span.menu--filters
+    label.title
+      | filter items
+    label(class='mode-icon all selected', onclick='jspro.render.resetFeedMode("all")', id='filter_all')
+      | all
+    label(class='mode-icon twitter unselected', onclick='jspro.render.resetFeedMode("twitter")', id='filter_twitter')
+      | twitter
+    label(class='mode-icon blogs unselected', onclick='jspro.render.resetFeedMode("blogs")', id='filter_blogs')
+      | blogs
+  span.menu--links
+    if (user)
+      a(class="starred-items-button", onclick='jspro.render.resetFeedMode("starred")')
+        | my starred items
+      a.account
+        | account
+      a.logout
+        | logout

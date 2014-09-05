@@ -8,7 +8,7 @@
 
 // Add neccessary modules.
 var express      = require('express');
-var port         = 3000;
+var port         = 80;
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var path         = require('path');

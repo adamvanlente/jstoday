@@ -10,5 +10,78 @@
 .menu--revealed
   top: 40px
 
-.menu-hidden
+.menu--hidden
   top: -200px
+
+.menu--filters
+  display: inline-block
+  padding: 12px
+
+  +break-for(iphone)
+    display: block
+    margin: 4px auto
+    width: 90%
+    text-align: center
+
+  label
+    display: inline-block
+    cursor: pointer
+    color: $LIGHT-TEXT
+
+    &.title
+      margin-right: 12px
+
+    &.all
+      border: 1px solid
+      padding: 4px 12px
+      border-top-left-radius: 4px
+      border-bottom-left-radius: 4px
+      border-right: none
+
+    &.twitter
+      border: 1px solid
+      padding: 4px 12px
+
+    &.blogs
+      border: 1px solid
+      padding: 4px 12px
+      border-top-right-radius: 4px
+      border-bottom-right-radius: 4px
+      border-left: none
+
+    &.selected
+      color: $TEAL
+      background-color: $LIGHT-TEXT
+      border-color: $LIGHT-TEXT
+
+    &.unselected
+      color: $LIGHT-TEXT
+      background-color: $TEAL
+      border-color: $LIGHT-TEXT
+
+.menu--links
+  position: absolute
+  margin-top: 16px
+  right: 12px
+
+  +break-for(iphone)
+    display: block
+    position: relative
+    margin: 24px auto
+    width: 90%
+    text-align: center
+
+
+  a
+    color: $TEAL
+    background-color: white
+    padding: 4px
+    margin: 8px
+    border-radius: 1px
+    border: 1px solid white
+    cursor: pointer
+    +trans($easybreezy)
+
+    &:hover
+      color: #fff
+      background-color: $TEAL
