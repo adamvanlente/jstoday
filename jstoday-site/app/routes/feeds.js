@@ -122,7 +122,7 @@ module.exports = function(app) {
             }
             var params = { _id : { $in: items } };
             var sortParams = {sort: {date: -1}, skip: start, limit: 20};
-            FeedItem.findMany( params, {}, {}, function(docs) {
+            FeedItem.findMany( params, {}, sortParams, function(docs) {
                 renderResponse(count, docs, true, res);
             });
 

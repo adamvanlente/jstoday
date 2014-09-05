@@ -12,7 +12,7 @@ div(class="menu menu--hidden", id="menu")
     if (user)
       a(class="starred-items-button", onclick='jspro.render.resetFeedMode("starred")')
         | my starred items
-      a.account
+      a(class="account", onclick="jspro.goto.account()")
         | account
-      a.logout
+      a(class="logout", onclick="jspro.goto.logout()")
         | logout

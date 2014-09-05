@@ -28,20 +28,36 @@ jspro.render = {
 
     insertFeedItem: function(item) {
 
-        var feedItem = $('<div></div>')
+        var isTwitter = item.type == 'twitter';
+
+        var feedItemElement = $('<div></div>')
             .attr('class', 'feed--item');
 
-        var title = item.type == 'twitter' ? item.content : item.title;
+        this.insertFeedItemTitle(item, isTwitter, feedItemElement);
+
+        this.insertFeedItemContent(item, isTwitter, feedItemElement);
+
+        this.insertFeedItemSourceHolder(item, isTwitter, feedItemElement);
+
+        this.insertFeedItemStar(item, feedItemElement);
+
+        this.feedDiv.append(feedItemElement);
+    },
+
+    insertFeedItemTitle: function(item, isTwitter, feedItemElement) {
+        var title = isTwitter ? item.content : item.title;
+        if (isTwitter) {
+            title = jspro.twitterHelper.cleanTweet(title);
+        }
         var titleSpan = $('<span></span>')
             .attr('class', 'title')
             .html(title);
+        feedItemElement.append(titleSpan);
+    },
 
-        var iconClass = item.type == 'twitter' ?
-            'fa fa-twitter' : 'fa fa-align-left';
+    insertFeedItemSourceHolder: function(item, isTwitter, feedItemElement) {
+        var iconClass = isTwitter ? 'fa fa-twitter' : 'fa fa-align-left';
         var icon = '<i class="' + iconClass + '"></i>';
-
-        var isTwitter = item.type == 'twitter';
-
         var sourceType = isTwitter ? 'tweet' : 'blog entry';
         var source = isTwitter ? item.author : item.source;
         var link = isTwitter ?
@@ -54,23 +70,25 @@ jspro.render = {
             .attr('class', 'sourceSpan ' + item.type)
             .html(icon + sourceType + ' from ' + '<b>' + source + '</b>');
         sourceHolder.append(linkToSource);
-        feedItem.append(titleSpan);
+        feedItemElement.append(sourceHolder);
+    },
 
+    insertFeedItemContent: function(item, isTwitter, feedItemElement) {
         if (!isTwitter) {
             var contentSpan = $('<span></span>')
                 .attr('class', 'content')
                 .html(item.content);
-            feedItem.append(contentSpan);
+            feedItemElement.append(contentSpan);
             var readFullArticleButton = $('<a></a>')
                 .attr('class', 'fullArticle')
                 .attr('href', item.source_url)
                 .attr('target', 'new')
                 .html('read the full post');
-            feedItem.append(readFullArticleButton);
+            feedItemElement.append(readFullArticleButton);
         }
+    },
 
-        feedItem.append(sourceHolder);
-
+    insertFeedItemStar: function(item, feedItemElement) {
         if (jspro.globals.userId) {
 
             var isStarred = jspro.globals.starredList.indexOf(item._id) != -1;
@@ -87,10 +105,8 @@ jspro.render = {
                 .attr('id', starId)
                 .attr('onclick', onclick)
                 .attr('class', starClass);
-            feedItem.append(star);
+            feedItemElement.append(star);
         }
-
-        this.feedDiv.append(feedItem);
     },
 
     insertLoadMoreArticlesButton: function() {

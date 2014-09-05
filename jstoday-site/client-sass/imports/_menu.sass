@@ -11,7 +11,7 @@
   top: 40px
 
 .menu--hidden
-  top: -200px
+  top: -400px
 
 .menu--filters
   display: inline-block
@@ -30,6 +30,11 @@
 
     &.title
       margin-right: 12px
+      +break-for(iphone)
+        display: block
+        margin: 0 auto
+        font-size: 24px
+        padding: 12px
 
     &.all
       border: 1px solid
@@ -37,10 +42,14 @@
       border-top-left-radius: 4px
       border-bottom-left-radius: 4px
       border-right: none
+      +break-for(iphone)
+        font-size: 24px
 
     &.twitter
       border: 1px solid
       padding: 4px 12px
+      +break-for(iphone)
+        font-size: 24px
 
     &.blogs
       border: 1px solid
@@ -48,6 +57,8 @@
       border-top-right-radius: 4px
       border-bottom-right-radius: 4px
       border-left: none
+      +break-for(iphone)
+        font-size: 24px
 
     &.selected
       color: $TEAL
@@ -66,10 +77,7 @@
 
   +break-for(iphone)
     display: block
-    position: relative
-    margin: 24px auto
-    width: 90%
-    text-align: center
+    position: initial
 
 
   a
@@ -81,6 +89,13 @@
     border: 1px solid white
     cursor: pointer
     +trans($easybreezy)
+
+    +break-for(iphone)
+      display: block
+      font-size: 24px
+      padding: 8px
+      width: 250px
+      margin: 24px auto
 
     &:hover
       color: #fff
