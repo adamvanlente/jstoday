@@ -3,7 +3,6 @@
 // __________________________________________
 
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
 
 var User = function() {
 
@@ -27,17 +26,6 @@ var User = function() {
         }
 
     });
-
-
-    // Generate a hash for PW.
-    _schemaModel.methods.generateHash = function(password) {
-        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-    };
-
-    // Confirm that a hash is valid.
-    _schemaModel.methods.validPassword = function(password) {
-        return bcrypt.compareSync(password, this.local.password);
-    };
 
     var _model = mongoose.model('User', _schemaModel);
 

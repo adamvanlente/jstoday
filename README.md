@@ -2,7 +2,7 @@
 
   jstoday-site: app that runs the actual site
 
-  jstoday-update-server: app that can be run like a cron job to update the databse.
+  jstoday-update-server: app that can be run like a cron job to update the database.
 
 
 ### Endpoints
@@ -32,24 +32,3 @@ JsToday has several restful url endpoints that provide json responses for the cl
 #### User's voted items
 	// Returns a simple list containing the ids of all voted items.
 	jstoday.io/feed/allvoted/userId
-
-
-### App Structures
-
-    jstoday-site
-      |
-      |_ app/
-        |_ models/
-        |_ routes/
-      |_ jspro.js
-      |_ package.json
-
-    jstoday-update-server
-      |
-      |_ app/
-        |_ cron/
-        |_ models/
-        |_ routes/
-      |_ package.json
-      |_ update-server.js
-        |_ views/

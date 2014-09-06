@@ -73,6 +73,8 @@
       font-family: $SANS-ONE
       font-size: 18px
       color: rgb(90, 123, 180)
+      +break-for(iphone)
+        font-size: 24px
 
       a
         color: $SALMON
@@ -101,7 +103,7 @@
   font-family: $SANS-ONE
   -webkit-appearance: none
   border: 1px solid
-  background-color: #fd8375
+  background-color: #5a7bb4
   color: white
   padding: 12px
   border-radius: 1px
@@ -109,7 +111,7 @@
   +trans($easybreezy)
 
   &:hover
-    color: $SALMON
+    color: #5a7bb4
     background-color: $LIGHT-GRAY
 
 .feed--item__star

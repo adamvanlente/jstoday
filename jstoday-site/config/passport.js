@@ -9,6 +9,7 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 // Set user model.
 var User       		   = require('../app/models/user');
+var bcrypt           = require('bcrypt-nodejs');
 
 // Get the authorization variables.
 var configAuth       = require('./auth');
@@ -43,13 +44,13 @@ module.exports = function(passport) {
                 if (user) {
                     return done(null, false);
                 } else {
-
-                    var newUser            = new User();
+                    var newUser            = {};
+                    newUser.local          = {};
                     newUser.local.email    = email;
-                    newUser.local.password = newUser.generateHash(password);
+                    newUser.local.password = generateHash(password);
 
                     User.createNew(newUser, function(doc) {
-                        return done(null, newUser);
+                        return done(null, doc);
                     });
                 }
             });
@@ -69,7 +70,7 @@ module.exports = function(passport) {
             if (!user)
                 return done(null, false);
 
-            if (!user.validPassword(password))
+            if (!validPassword(password))
                 return done(null, false);
             return done(null, user);
         });
@@ -84,7 +85,6 @@ module.exports = function(passport) {
     },
 
     function(token, refreshToken, profile, done) {
-
         process.nextTick(function() {
 
           User.findFacebookUserById(profile.id, function(user) {
@@ -93,14 +93,15 @@ module.exports = function(passport) {
                   return done(null, user);
               } else {
                   // If there is no user, create one
-                  var newUser               = new User();
+                  var newUser               = {};
+                  newUser.facebook          = {};
                   newUser.facebook.id       = profile.id;
                   newUser.facebook.token    = token;
                   newUser.facebook.name     = profile.name.givenName + ' ' + profile.name.familyName;
                   newUser.facebook.email    = profile.emails[0].value;
 
                   User.createNew(newUser, function(doc) {
-                      return done(null, newUser);
+                      return done(null, doc);
                   });
 
               }
@@ -126,18 +127,31 @@ module.exports = function(passport) {
   	                return done(null, user);
   	            } else {
 
-  	                var newUser          = new User();
+  	                var newUser          = {};
+                    newUser.google       = {};
   	                newUser.google.id    = profile.id;
   	                newUser.google.token = token;
   	                newUser.google.name  = profile.displayName;
   	                newUser.google.email = profile.emails[0].value; // pull the first email
 
                     User.createNew(newUser, function(doc) {
-                        return done(null, newUser);
+                        return done(null, doc);
                     });
 
   	            }
   	        });
 	    });
     }));
+
+    // Generate a hash for PW.
+    function generateHash(password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    };
+
+    // Confirm that a hash is valid.
+     function validPassword(password) {
+        return bcrypt.compareSync(password, this.local.password);
+    };
+
+
 };

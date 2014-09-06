@@ -1,8 +1,11 @@
 .loader
   display: block
   position: fixed
-  left: 10%
-  right: 10%
+  left: 25%
+  right: 25%
+  +break-for(iphone)
+    left: 15%
+    right: 15%
 
   span
     display: block
@@ -14,7 +17,6 @@
     background-color: rgba(236, 229, 229, 0.93)
     box-shadow: 0 0 10px rgba(0,0,0,0.1)
     border-radius: 1px
-    width: 450px
     text-align: center
 
     i
