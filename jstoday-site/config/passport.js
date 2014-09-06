@@ -70,7 +70,7 @@ module.exports = function(passport) {
             if (!user)
                 return done(null, false);
 
-            if (!validPassword(password))
+            if (!validPassword(password, user.local.password))
                 return done(null, false);
             return done(null, user);
         });
@@ -149,8 +149,8 @@ module.exports = function(passport) {
     };
 
     // Confirm that a hash is valid.
-     function validPassword(password) {
-        return bcrypt.compareSync(password, this.local.password);
+     function validPassword(password, userPass) {
+        return bcrypt.compareSync(password, userPass);
     };
 
 
