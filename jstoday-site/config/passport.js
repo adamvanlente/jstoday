@@ -6,6 +6,7 @@
 var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
+var GitHubStrategy   = require('passport-github').Strategy;
 
 // Set user model.
 var User       		   = require('../app/models/user');
@@ -142,6 +143,39 @@ module.exports = function(passport) {
   	        });
 	    });
     }));
+
+    // Github
+    passport.use(new GitHubStrategy({
+        clientID        : configAuth.githubAuth.clientID,
+        clientSecret    : configAuth.githubAuth.clientSecret,
+        callbackURL     : configAuth.githubAuth.callbackURL,
+    },
+    function(token, refreshToken, profile, done) {
+        console.log('for github found user', profile);
+        process.nextTick(function() {
+
+            User.findGithubUserById( profile.id, function(user) {
+
+                if (user) {
+                    return done(null, user);
+                } else {
+
+                    var newUser          = {};
+                    newUser.github       = {};
+                    newUser.github.id    = profile.id;
+                    newUser.github.token = token;
+                    newUser.github.name  = profile.displayName;
+                    newUser.github.email = profile.emails[0].value;
+                    console.log('and creating', newUser);
+                    User.createNew(newUser, function(doc) {
+                        return done(null, doc);
+                    });
+
+                }
+            });
+      });
+    }));
+
 
     // Generate a hash for PW.
     function generateHash(password) {

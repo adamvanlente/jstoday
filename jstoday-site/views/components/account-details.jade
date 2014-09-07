@@ -23,6 +23,17 @@ div.accountDetails
           | logged in with
           span(class="fa fa-google")
 
+    if (user.github.id)
+      div
+        label
+          if (user.github.email)
+            |account: #{user.github.email}
+          else
+            |account: #{user.github.name}
+        label.oauth
+          | logged in with
+          span(class="fa fa-github-square")
+
     if (user)
       h4.userId#userId= user.id
 

@@ -15,6 +15,9 @@ div.header#header
 
         if (user.google.email)
           i(class="fa fa-google user-logged-in")
+
+        if (user.github.id)
+          i(class="fa fa-github-square user-logged-in")
     else
       label(class="header--menu__loginButton", onclick="jspro.goto.login()")
         em

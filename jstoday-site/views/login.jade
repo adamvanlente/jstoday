@@ -36,8 +36,13 @@ block append content
             | new user
 
       a(href="/auth/google", class="google")
-        span(class="fa fa-google-plus")
+        span(class="fa fa-google")
         label
           | google
+
+      a(href="/auth/github", class="github")
+        span(class="fa fa-github-square")
+        label
+          | github
 
   include components/scripts
